@@ -62,11 +62,11 @@ export default function Home() {
             />
           </div>
         </div>
+        {loading && <ProductCardSkeleton />}
+        {error && <ErrorState message={error} />}
         {!loading && !error && filteredProducts.length === 0 && (
           <EmptyState message="No products found" />
         )}
-        {loading && <ProductCardSkeleton />}
-        {error && <ErrorState message={error} />}
         {/*=================
         Display all Products
         ==================== */}
