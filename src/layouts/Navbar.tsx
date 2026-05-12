@@ -1,7 +1,7 @@
 import { FiShoppingCart } from "react-icons/fi";
 const Navbar = () => {
   return (
-    <nav className="bg-white shadow-sm border-b">
+    <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <h1 className="text-2xl font-bold">Fake Store</h1>
 
