@@ -12,7 +12,7 @@ const CategorySelect = ({
 }: CategorySelectProps) => {
   const options = categories.map((cat) => ({
     value: cat,
-    label: cat,
+    label: cat.charAt(0).toUpperCase() + cat.slice(1),
   }));
   return (
     <>

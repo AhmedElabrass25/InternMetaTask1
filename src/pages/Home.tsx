@@ -51,7 +51,7 @@ export default function Home() {
         Search & Category 
         =====================*/}
         <div className="flex items-center flex-col md:flex-row gap-4 mb-8">
-          <div className="flex-1">
+          <div className="w-full md:flex-1">
             <SearchInput search={search} setSearch={setSearch} />
           </div>
           <div className="w-full md:w-72">
