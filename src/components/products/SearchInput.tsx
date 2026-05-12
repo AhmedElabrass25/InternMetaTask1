@@ -10,7 +10,7 @@ const SearchInput = ({ search, setSearch }: SearchInputProps) => {
         placeholder="Search products..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full h-13 border border-gray-300 rounded-xs px-4 outline-none focus:ring-2 focus:ring-blue-500"
       />
     </div>
   );

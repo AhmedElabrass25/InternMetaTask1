@@ -5,7 +5,7 @@ interface ProductCardProps {
 }
 const ProductCard = ({ product }: ProductCardProps) => {
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition duration-300">
+    <div className="bg-white rounded-xs shadow-md p-4 hover:shadow-xl transition duration-300">
       <img
         src={product.image}
         alt={product.title}

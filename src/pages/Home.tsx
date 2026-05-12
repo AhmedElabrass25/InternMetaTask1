@@ -3,6 +3,8 @@ import { api } from "../services/api";
 import { type IProduct } from "../types/product.types";
 import ProductCard from "../components/products/ProductCard";
 import SearchInput from "../components/products/SearchInput";
+import CategorySelect from "../components/products/CategorySelect";
+import ProductCardSkeleton from "../components/products/ProductCardSkeleton";
 
 export default function Home() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -10,13 +12,23 @@ export default function Home() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [count, setCount] = useState(0);
+  const [category, setCategory] = useState("all");
+  // Get categories without
+  const categories = useMemo(() => {
+    return ["all", ...new Set(products.map((product) => product.category))];
+  }, [products]);
+  // Filter products (search & categories)
   const filteredProducts: IProduct[] = useMemo(() => {
-    console.log("FILTERING RUNNING");
-    return products.filter((product) =>
-      product.title.toLowerCase().includes(debouncedSearch),
-    );
-  }, [products, debouncedSearch]);
+    return products.filter((product) => {
+      const searchResults = product.title
+        .toLowerCase()
+        .includes(debouncedSearch);
+      const categoryResults =
+        category === "all" || product.category === category;
+      return searchResults && categoryResults;
+    });
+  }, [products, debouncedSearch, category]);
+  //  Get all products
   async function getProducts() {
     try {
       setLoading(true);
@@ -31,6 +43,7 @@ export default function Home() {
   useEffect(() => {
     getProducts();
   }, []);
+  // Debouncing
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
@@ -42,19 +55,25 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-10">
-      <button onClick={() => setCount(count + 1)}>Increase {count}</button>
       <h1 className="text-4xl font-bold mb-10 text-center">Fake Store</h1>
-      <div className="mb-8">
-        <SearchInput search={search} setSearch={setSearch} />
+      <div className="flex items-center flex-col md:flex-row gap-4 mb-8">
+        <div className="flex-1">
+          <SearchInput search={search} setSearch={setSearch} />
+        </div>
+        <div className="w-full md:w-72">
+          <CategorySelect
+            categories={categories}
+            category={category}
+            setCategory={setCategory}
+          />
+        </div>
       </div>
       {filteredProducts.length === 0 && !loading && (
         <h2 className="text-center text-2xl font-semibold">
           No products found
         </h2>
       )}
-      {loading && (
-        <h2 className="text-center text-2xl font-semibold">Loading...</h2>
-      )}
+      {loading && <ProductCardSkeleton />}
       {error && <h2 className="text-center text-red-500 text-2xl">{error}</h2>}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
