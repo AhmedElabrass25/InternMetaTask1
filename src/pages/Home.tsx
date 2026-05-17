@@ -7,21 +7,18 @@ import ProductCardSkeleton from "../components/products/ProductCardSkeleton";
 import EmptyState from "../components/ui/EmptyState";
 import ErrorState from "../components/ui/ErrorState";
 import { useProducts } from "../hooks/useProducts";
+import Heading from "../components/ui/Heading";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [category, setCategory] = useState("all");
   const { products, loading, error } = useProducts();
-  // ================================
   // Get categories without duplicates
-  // =================================
   const categories = useMemo(() => {
     return ["all", ...new Set(products.map((product) => product.category))];
   }, [products]);
-  // ====================================
   // Filter products (search & categories)
-  // =====================================
   const filteredProducts: IProduct[] = useMemo(() => {
     return products.filter((product) => {
       const searchResults = product.title
@@ -32,9 +29,7 @@ export default function Home() {
       return searchResults && categoryResults;
     });
   }, [products, debouncedSearch, category]);
-  // =================
   // Debouncing search
-  // =================
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
@@ -47,10 +42,8 @@ export default function Home() {
   return (
     <section className="mt-28">
       <div className="container mx-auto px-4 py-10">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Our Products</h1>
-        {/*==================
-        Search & Category 
-        =====================*/}
+        <Heading title="Our Products" />
+        {/*===========Search & Category ==============*/}
         <div className="flex items-center flex-col md:flex-row gap-4 mb-8">
           <div className="w-full md:flex-1">
             <SearchInput search={search} setSearch={setSearch} />
@@ -68,9 +61,7 @@ export default function Home() {
         {!loading && !error && filteredProducts.length === 0 && (
           <EmptyState message="No products found" />
         )}
-        {/*=================
-        Display all Products
-        ==================== */}
+        {/*=============Display all Products============== */}
         {!loading && !error && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
