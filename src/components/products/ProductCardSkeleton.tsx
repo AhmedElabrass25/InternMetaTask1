@@ -4,7 +4,7 @@ const ProductCardSkeleton = () => {
       {Array.from({ length: 8 }).map((_, index) => (
         <div
           key={index}
-          className="bg-white rounded-xs shadow-md p-4 animate-pulse"
+          className="bg-white rounded-2xl shadow-md p-4 animate-pulse"
         >
           <div className="h-52 w-full bg-gray-200 rounded-lg"></div>
 

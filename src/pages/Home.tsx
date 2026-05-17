@@ -26,7 +26,7 @@ export default function Home() {
     return products.filter((product) => {
       const searchResults = product.title
         .toLowerCase()
-        .includes(debouncedSearch);
+        .includes(debouncedSearch.toLowerCase());
       const categoryResults =
         category === "all" || product.category === category;
       return searchResults && categoryResults;
@@ -45,8 +45,9 @@ export default function Home() {
   }, [search]);
 
   return (
-    <section className="mt-16">
+    <section className="mt-28">
       <div className="container mx-auto px-4 py-10">
+        <h1 className="text-4xl font-bold text-gray-900 mb-8">Our Products</h1>
         {/*==================
         Search & Category 
         =====================*/}
